@@ -10,7 +10,7 @@ create table account (
 create table login (
     id bigint primary key,
     account bigint references account(id) not null,
-    login text unique not null,
+    username text unique not null,
     password text not null,
     last_auth timestamp default now(),
     modified_timestamp timestamp default now(),

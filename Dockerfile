@@ -1,6 +1,11 @@
-FROM openjdk:17-oracle
+FROM gradle:8.3.0-jdk17 AS build
 RUN mkdir -p /root/java/application
-WORKDIR /root/java/application
-COPY ./build/libs/Lab1-1.0.0.jar /root/java/application/application.jar
+COPY --chown=gradle:gradle . /root/java/application/src
+WORKDIR /root/java/application/src
+RUN gradle build --no-daemon
 
-CMD ["java", "-jar", "application.jar"]
+FROM openjdk:17-oracle
+COPY --from=build /root/java/application/src/build/libs/*.jar /root/java/application/spring-boot-application.jar
+
+
+CMD ["java","-jar", "/root/java/application/spring-boot-application.jar"]

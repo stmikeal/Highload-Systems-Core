@@ -2,7 +2,7 @@ create table account (
     id bigint primary key,
     name text not null,
     avatar_url text,
-    birth timestamp not null,
+    birth date not null,
     modified_timestamp timestamp default now(),
     created_timestamp timestamp default now()
 );

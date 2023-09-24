@@ -52,7 +52,7 @@ create table account_role_link (
 create table company (
     id bigint primary key,
     name text unique not null,
-    avatars_url text,
+    avatar_url text,
     modified_timestamp timestamp default now(),
     created_timestamp timestamp default now()
 );

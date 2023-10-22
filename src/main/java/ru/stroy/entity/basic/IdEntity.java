@@ -15,6 +15,7 @@ public class IdEntity implements Serializable {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Override

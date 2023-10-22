@@ -1,17 +1,18 @@
-package ru.stroy.entity;
+package ru.stroy.entity.datasource;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.stroy.entity.basic.CodeEntity;
-import ru.stroy.entity.basic.IdEntity;
 
 @Entity(name = "access")
 @RequiredArgsConstructor
 @Getter
 @Setter
+
 public class Access extends CodeEntity {
 
     @Column(name = "title", nullable = false)

@@ -1,4 +1,4 @@
-package ru.stroy.entity;
+package ru.stroy.entity.datasource;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,13 +16,13 @@ import java.util.List;
 public class Account extends TimeManagedEntity {
 
     @Column(name = "name", nullable = false)
-    private String name;
+    private String name = "";
 
     @Column(name = "avatar_url")
     private String avatarUrl;
 
     @Column(name = "birth", nullable = false)
-    private LocalDate birth;
+    private LocalDate birth = LocalDate.of(1980, 1, 1);
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<AccountRoleLink> roles;

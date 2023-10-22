@@ -1,4 +1,4 @@
-package ru.stroy.entity;
+package ru.stroy.entity.datasource;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class Login extends TimeManagedEntity {
     @JoinColumn(name = "account", referencedColumnName = "id", nullable = false)
     private Account account;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Column(name = "password", nullable = false)

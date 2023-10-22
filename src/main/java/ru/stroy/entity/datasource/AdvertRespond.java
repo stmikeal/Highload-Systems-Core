@@ -1,4 +1,4 @@
-package ru.stroy.entity;
+package ru.stroy.entity.datasource;
 
 import jakarta.persistence.*;
 import lombok.Getter;

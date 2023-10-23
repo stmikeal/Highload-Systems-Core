@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.stroy.dto.enumeration.AccessCompanyEnum;
 import ru.stroy.dto.request.AttachCompanyAccountDto;
 import ru.stroy.dto.request.AttachCompanyAreaDto;
+import ru.stroy.dto.request.AttachCompanyTariffDto;
 import ru.stroy.dto.request.CompanyCreateDto;
 import ru.stroy.entity.datasource.Account;
 import ru.stroy.entity.datasource.Area;
@@ -24,6 +25,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final AccountService accountService;
     private final AreaRepository areaRepository;
+    private final TariffService tariffService;
 
     public Company createCompanyByCurrentUser(CompanyCreateDto companyCreateDto) {
         Company company = new Company();
@@ -48,6 +50,11 @@ public class CompanyService {
         areas.add(areaRepository.findByCode(attach.getArea().getCode()));
         company.setAreas(areas);
         companyRepository.save(company);
+    }
+
+    public void attachTariffToCompany(Long companyId, AttachCompanyTariffDto attach) {
+        Company company = getCompanyWithPermission(companyId);
+        tariffService.createTariffByDto(company, attach);
     }
 
     private Company getCompanyWithPermission(Long companyId) {

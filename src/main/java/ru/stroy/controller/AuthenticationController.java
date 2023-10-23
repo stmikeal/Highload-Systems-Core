@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.*;
 
 import ru.stroy.dto.request.RegisterRequestDto;
-import ru.stroy.entity.datasource.Login;
 import ru.stroy.repositories.security.LoginRepository;
 import ru.stroy.services.LoginService;
 
@@ -49,7 +48,7 @@ public class AuthenticationController {
         if (loginRepository.existsByUsername(requestLogin.getUsername())) {
             return new ResponseEntity<>("Username is already in use", HttpStatus.BAD_REQUEST);
         } else {
-            Login login = loginRepository.save(loginService.createLoginFromRequest(requestLogin));
+            loginRepository.save(loginService.createLoginFromRequest(requestLogin));
             return ResponseEntity.ok("User successfully registered");
         }
     }

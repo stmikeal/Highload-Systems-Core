@@ -6,13 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import ru.stroy.entity.datasource.Account;
 import ru.stroy.entity.datasource.AdvertRespond;
-import ru.stroy.repositories.AccountRepository;
 import ru.stroy.repositories.AdvertRespondRepository;
-import ru.stroy.repositories.security.LoginRepository;
 import ru.stroy.services.AccountService;
 import ru.stroy.services.AdvertRespondService;
 

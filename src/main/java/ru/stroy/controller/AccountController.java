@@ -20,13 +20,13 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Account getAccountInfo(@PathVariable Long id) {
+    public Account getOtherAccountInfo(@PathVariable Long id) {
         return accountService.getAccountById(id);
     }
 
     @PostMapping
     @ResponseBody
-    public void getAccountInfo(@RequestBody AccountUpdateDto accountUpdateDto) {
+    public void setAccountInfo(@RequestBody AccountUpdateDto accountUpdateDto) {
         accountService.updateAccountByDto(accountUpdateDto);
     }
 }

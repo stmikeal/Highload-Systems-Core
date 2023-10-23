@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 public class Login extends TimeManagedEntity {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account", referencedColumnName = "id", nullable = false)
     private Account account;
 

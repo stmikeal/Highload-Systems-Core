@@ -29,8 +29,4 @@ public class Account extends TimeManagedEntity {
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<AccountCompanyLink> positions;
-
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private Login login;
 }

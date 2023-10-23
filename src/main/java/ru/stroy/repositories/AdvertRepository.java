@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.stroy.entity.Advert;
 
 @Repository
-public interface AdvertRepository extends JpaRepository<Advert, Integer> {
+public interface AdvertRepository extends IdEntityRepository<Advert> {
 }

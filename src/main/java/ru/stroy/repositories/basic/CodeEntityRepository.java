@@ -8,5 +8,5 @@ import java.util.Optional;
 @NoRepositoryBean
 public interface CodeEntityRepository<T extends CodeEntity> extends IdEntityRepository<T> {
 
-    Optional<T> findByCode(Long code);
+    T findByCode(Long code);
 }

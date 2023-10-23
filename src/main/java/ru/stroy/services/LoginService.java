@@ -1,0 +1,24 @@
+package ru.stroy.services;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import ru.stroy.entity.datasource.Login;
+import ru.stroy.dto.request.RegisterRequestDto;
+
+@Service
+@RequiredArgsConstructor
+public class LoginService {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    private final AccountService accountService;
+
+    public Login createLoginFromRequest(RegisterRequestDto requestLogin) {
+        Login login = new Login();
+        login.setUsername(requestLogin.getUsername());
+        login.setPassword(passwordEncoder.encode(requestLogin.getPassword()));
+        login.setAccount(accountService.createEmptyAccount());
+        return login;
+    }
+}

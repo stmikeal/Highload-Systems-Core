@@ -23,4 +23,14 @@ public class AccountCompanyLinkService {
         accountCompanyLink.setCompany(company);
         return accountCompanyLinkRepository.save(accountCompanyLink);
     }
+
+    public Boolean hasEditPermission(Long accountId, Long companyId) {
+        return
+                accountCompanyLinkRepository
+                        .existsAccountCompanyLinkByAccount_IdAndCompany_IdAndAccess_Code
+                                (accountId, companyId, AccessCompanyEnum.Owner.getCode()) ||
+                accountCompanyLinkRepository
+                        .existsAccountCompanyLinkByAccount_IdAndCompany_IdAndAccess_Code
+                                (accountId, companyId, AccessCompanyEnum.Moderator.getCode());
+    }
 }

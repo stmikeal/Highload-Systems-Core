@@ -17,7 +17,6 @@ import ru.stroy.repositories.CompanyRepository;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
@@ -57,7 +56,7 @@ public class CompanyService {
         tariffService.createTariffByDto(company, attach);
     }
 
-    private Company getCompanyWithPermission(Long companyId) {
+    public Company getCompanyWithPermission(Long companyId) {
         Company company = companyRepository.findById(companyId)
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find company"));
         Account account = accountService.getContextAccount();

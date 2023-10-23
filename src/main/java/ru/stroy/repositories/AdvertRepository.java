@@ -1,9 +1,9 @@
 package ru.stroy.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.stroy.entity.Advert;
+import ru.stroy.entity.datasource.Advert;
+import ru.stroy.repositories.basic.TimeManagedRepository;
 
 @Repository
-public interface AdvertRepository extends IdEntityRepository<Advert> {
+public interface AdvertRepository extends TimeManagedRepository<Advert> {
 }

@@ -37,7 +37,6 @@ public class AccountService {
     }
 
     public Account getAccountById(Long id) {
-        Optional<Login> login = loginRepository.findById(id);
-        return login.map(Login::getAccount).orElse(new Account());
+        return accountRepository.findById(id).orElse(new Account());
     }
 }

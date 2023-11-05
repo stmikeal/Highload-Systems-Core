@@ -1,4 +1,4 @@
-package ru.stroy.utils;
+package ru.stroy.module.utils;
 
 import ru.stroy.entity.datasource.Account;
 import ru.stroy.entity.datasource.AdvertRespond;

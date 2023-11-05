@@ -1,4 +1,4 @@
-package ru.stroy;
+package ru.stroy.module;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ru.stroy.utils.ResourceContainer.*;
+import static ru.stroy.module.utils.ResourceContainer.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AdvertRespondTest {

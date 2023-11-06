@@ -15,6 +15,8 @@ public class LoginDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (getUsername().equals("admin"))
+            return List.of(new SimpleGrantedAuthority("ADMIN_ROLE"));
         return List.of(new SimpleGrantedAuthority("USER"));
     }
 

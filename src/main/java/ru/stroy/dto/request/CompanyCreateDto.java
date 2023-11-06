@@ -12,6 +12,6 @@ import lombok.Setter;
 public class CompanyCreateDto {
     @NotBlank
     private String name;
-    @Pattern(regexp = "(?:(?:http)|(?:https)):\\/\\/.+\\.(?=(?:com)|(?:ru))")
+    @Pattern(regexp = "(?:(?:http)|(?:https)):\\/\\/.+\\.(?:(?:com)|(?:ru))")
     private String avatarUrl;
 }

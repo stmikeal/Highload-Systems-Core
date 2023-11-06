@@ -51,7 +51,7 @@ public class ControllersTest {
     }
 
     private final static String contextUsername = "mike";
-    private final static String contextPassword = "admin";
+    private final static String contextPassword = "Admin10aDMIN";
     private final static String contextURL = "http://best-url.com";
     private final static String contextTitle = "test title";
     private final static String contextDescription = "test description";
@@ -155,7 +155,7 @@ public class ControllersTest {
 
     @Test
     void changeAccountFields() {
-        AccountUpdateDto accountUpdateDto = new AccountUpdateDto(contextUsername, contextURL, LocalDate.now());
+        AccountUpdateDto accountUpdateDto = new AccountUpdateDto(contextUsername, contextURL, LocalDate.now().minusYears(20L));
         basicPost("/account", accountUpdateDto);
         basicGet("/account")
                 .body("id", equalTo(getLogin().getAccount().getId().intValue()))
@@ -167,11 +167,11 @@ public class ControllersTest {
     void putSimpleAdvert() {
         basicPut("/advert", contextAdvert);
         basicGet("/advert")
-                .body("type.code", hasItem(contextAdvert.getAdvertType().code.intValue()))
-                .body("title", hasItem(contextAdvert.getTitle()))
-                .body("description", hasItem(contextAdvert.getDescription()))
-                .body("price", hasItem(contextAdvert.getPrice().intValue()))
-                .body("currency.code", hasItem(contextAdvert.getCurrency().getCode().intValue()));
+                .body("content.type.code", hasItem(contextAdvert.getAdvertType().code.intValue()))
+                .body("content.title", hasItem(contextAdvert.getTitle()))
+                .body("content.description", hasItem(contextAdvert.getDescription()))
+                .body("content.price", hasItem(contextAdvert.getPrice().intValue()))
+                .body("content.currency.code", hasItem(contextAdvert.getCurrency().getCode().intValue()));
     }
 
     @Test

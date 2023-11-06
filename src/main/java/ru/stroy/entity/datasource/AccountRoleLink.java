@@ -1,5 +1,6 @@
 package ru.stroy.entity.datasource;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,9 @@ import ru.stroy.entity.basic.IdEntity;
 @Setter
 public class AccountRoleLink extends IdEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "account")
+    @JsonBackReference
     private Account account;
 
     @ManyToOne

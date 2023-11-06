@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class AccountUpdateDto {
     @NotBlank
     private String name;
-    @Pattern(regexp = "(?:(?:http)|(?:https)):\\/\\/.+\\.(?=(?:com)|(?:ru))")
+    @Pattern(regexp = "(?:(?:http)|(?:https))://.+\\.(?:(?:com)|(?:ru))")
     private String avatarUrl;
     @Past
     private LocalDate birth;

@@ -15,7 +15,7 @@ public class DocumentPutDto {
     @NotNull
     @PositiveOrZero
     private Long respondId;
-    @Pattern(regexp = "(?:(?:http)|(?:https)):\\/\\/.+\\.(?=(?:com)|(?:ru))")
+    @Pattern(regexp = "(?:(?:http)|(?:https)):\\/\\/.+\\.(?:(?:com)|(?:ru))")
     private String url;
     @NotBlank
     private String title;

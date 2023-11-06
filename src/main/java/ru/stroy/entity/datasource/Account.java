@@ -1,5 +1,6 @@
 package ru.stroy.entity.datasource;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,10 @@ public class Account extends TimeManagedEntity {
     private LocalDate birth = LocalDate.of(1980, 1, 1);
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<AccountRoleLink> roles;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<AccountCompanyLink> positions;
 }

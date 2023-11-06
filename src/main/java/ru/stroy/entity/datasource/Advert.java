@@ -17,7 +17,7 @@ public class Advert extends TimeManagedEntity {
     private Account author;
 
     @ManyToOne
-    @JoinColumn(name = "company", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "company", referencedColumnName = "id")
     private Company company;
 
     @ManyToOne

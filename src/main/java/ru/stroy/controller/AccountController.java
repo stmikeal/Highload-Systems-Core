@@ -1,6 +1,9 @@
 package ru.stroy.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.stroy.dto.request.AccountUpdateDto;
 import ru.stroy.entity.datasource.Account;
@@ -9,6 +12,7 @@ import ru.stroy.services.AccountService;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/account")
+@Validated
 public class AccountController {
     private final AccountService accountService;
 
@@ -20,13 +24,13 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Account getOtherAccountInfo(@PathVariable Long id) {
+    public Account getOtherAccountInfo(@PositiveOrZero @PathVariable Long id) {
         return accountService.getAccountById(id);
     }
 
     @PostMapping
     @ResponseBody
-    public void setAccountInfo(@RequestBody AccountUpdateDto accountUpdateDto) {
+    public void setAccountInfo(@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
         accountService.updateAccountByDto(accountUpdateDto);
     }
 }

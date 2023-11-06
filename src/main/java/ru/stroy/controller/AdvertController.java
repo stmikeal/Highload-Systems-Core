@@ -1,6 +1,9 @@
 package ru.stroy.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.stroy.dto.request.AdvertCreateDto;
 import ru.stroy.entity.datasource.Advert;
@@ -12,12 +15,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/advert")
+@Validated
 public class AdvertController {
     private final AdvertService advertService;
     private final AdvertRepository advertRepository;
 
     @PutMapping
-    public void createAdvert(@RequestBody AdvertCreateDto advertCreateDto) {
+    public void createAdvert(@Valid @RequestBody AdvertCreateDto advertCreateDto) {
         advertService.createAdvertByDto(advertCreateDto);
     }
 
@@ -29,7 +33,7 @@ public class AdvertController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Advert getAdvert(@PathVariable Long id) {
+    public Advert getAdvert(@PositiveOrZero @PathVariable Long id) {
         return advertRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Advert not found"));
     }
 }

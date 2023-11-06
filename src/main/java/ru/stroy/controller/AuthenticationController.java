@@ -1,5 +1,6 @@
 package ru.stroy.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import ru.stroy.dto.request.RegisterRequestDto;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class AuthenticationController {
     @Autowired
     private JwtEncoder encoder;
@@ -44,7 +47,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequestDto requestLogin) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto requestLogin) {
         if (loginRepository.existsByUsername(requestLogin.getUsername())) {
             return new ResponseEntity<>("Username is already in use", HttpStatus.BAD_REQUEST);
         } else {

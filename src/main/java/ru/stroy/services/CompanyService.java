@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.stroy.dto.enumeration.AccessCompanyEnum;
 import ru.stroy.dto.request.AttachCompanyAccountDto;
 import ru.stroy.dto.request.AttachCompanyAreaDto;
@@ -26,6 +27,7 @@ public class CompanyService {
     private final AreaRepository areaRepository;
     private final TariffService tariffService;
 
+    @Transactional
     public Company createCompanyByCurrentUser(CompanyCreateDto companyCreateDto) {
         Company company = new Company();
         company.setName(companyCreateDto.getName());
@@ -36,6 +38,7 @@ public class CompanyService {
         return company;
     }
 
+    @Transactional
     public void attachEmployeeToCompany(Long companyId, AttachCompanyAccountDto attach) {
         Company company = getCompanyWithPermission(companyId);
         Account account = accountService.getAccountById(attach.getAccountId());

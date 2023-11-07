@@ -1,0 +1,1 @@
+update login set password='$2a$10$3GT2kPSzpjA1IS2ncPpISuVghmfc8yf8rSCmLHMkwr1anIQchGwGG' where username = 'admin';

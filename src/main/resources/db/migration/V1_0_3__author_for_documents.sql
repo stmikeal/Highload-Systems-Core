@@ -1,0 +1,1 @@
+ALTER TABLE document ADD author bigint references account(id) not null default 0;

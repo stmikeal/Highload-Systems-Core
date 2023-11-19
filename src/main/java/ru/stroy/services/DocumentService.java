@@ -14,21 +14,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DocumentService {
     private final DocumentRepository documentRepository;
-    private final AdvertRespondService advertRespondService;
     private final AccountService accountService;
 
-    public void putDocumentToRespondByDto(DocumentPutDto documentPutDto) throws ResourceAccessException {
-        if (!advertRespondService.isOwnedRespond(documentPutDto.getRespondId()))
-            throw new ResourceAccessException("User isn't applicant of respond");
+    public Document putDocumentByDto(DocumentPutDto documentPutDto) {
         Document document = new Document();
         document.setUrl(documentPutDto.getUrl());
         document.setDescription(documentPutDto.getDescription());
         document.setTitle(documentPutDto.getTitle());
-        documentRepository.attachToRespond(documentRepository.save(document).getId(), documentPutDto.getRespondId());
+        document.setAuthor(accountService.getContextAccount());
+        documentRepository.save(document);
+        return document;
     }
 
     public List<Document> getDocumentsOfCurrentUser() {
-        Account account = accountService.getContextAccount();
-        return documentRepository.getApplicantDocuments(account.getId());
+        return documentRepository.findAllByAuthor(accountService.getContextAccount());
     }
 }

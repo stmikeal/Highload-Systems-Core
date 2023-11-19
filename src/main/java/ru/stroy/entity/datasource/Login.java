@@ -1,5 +1,6 @@
 package ru.stroy.entity.datasource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class Login extends TimeManagedEntity {
     private String username;
 
     @Column(name = "password", nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(name = "last_auth")

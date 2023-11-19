@@ -1,5 +1,6 @@
 package ru.stroy.entity.datasource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import ru.stroy.entity.basic.TimeManagedEntity;
 public class AccountRoleConfirmation extends TimeManagedEntity {
 
     @Column(name = "signature")
+    @JsonIgnore
     private String signature;
 
     @Column(name = "description")

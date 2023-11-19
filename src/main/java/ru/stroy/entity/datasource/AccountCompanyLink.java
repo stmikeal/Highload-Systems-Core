@@ -1,6 +1,7 @@
 package ru.stroy.entity.datasource;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,13 @@ public class AccountCompanyLink extends IdEntity {
     @ManyToOne
     @JoinColumn(name = "account", nullable = false)
     @JsonBackReference
+    @JsonIgnore
     private Account account;
 
     @ManyToOne
     @JoinColumn(name = "company", nullable = false)
     @JsonBackReference
+    @JsonIgnore
     private Company company;
 
     @Column(name = "position")
@@ -28,5 +31,6 @@ public class AccountCompanyLink extends IdEntity {
 
     @ManyToOne
     @JoinColumn(name = "access", referencedColumnName = "code", nullable = false)
+    @JsonIgnore
     private Access access;
 }

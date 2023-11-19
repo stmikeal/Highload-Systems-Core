@@ -1,5 +1,6 @@
 package ru.stroy.entity.datasource;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,11 +24,13 @@ public class Company extends TimeManagedEntity {
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @JsonIgnore
     private List<AccountCompanyLink> employee;
 
     @ManyToMany
     @JoinTable(name="company_area_link",
             joinColumns=@JoinColumn(name="company"),
             inverseJoinColumns=@JoinColumn(name="area"))
+    @JsonIgnore
     private List<Area> areas;
 }

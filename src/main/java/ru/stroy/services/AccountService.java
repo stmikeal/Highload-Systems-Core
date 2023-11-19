@@ -3,10 +3,11 @@ package ru.stroy.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ru.stroy.dto.request.AccountPutConfirmationDto;
 import ru.stroy.dto.request.AccountUpdateDto;
-import ru.stroy.entity.datasource.Account;
-import ru.stroy.entity.datasource.Login;
+import ru.stroy.entity.datasource.*;
 import ru.stroy.repositories.AccountRepository;
+import ru.stroy.repositories.AccountRoleRepository;
 import ru.stroy.repositories.security.LoginRepository;
 
 import java.util.Optional;
@@ -16,6 +17,10 @@ import java.util.Optional;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final LoginRepository loginRepository;
+    private final AccountRoleConfirmService accountRoleConfirmService;
+    private final DocumentService documentService;
+    private final AccountRoleLinkService accountRoleLinkService;
+    private final AccountRoleRepository accountRoleRepository;
 
     public Account createEmptyAccount() {
         Account account = new Account();
@@ -38,5 +43,13 @@ public class AccountService {
 
     public Account getAccountById(Long id) {
         return accountRepository.findById(id).orElse(new Account());
+    }
+
+    public void confirmAccountByDto(AccountPutConfirmationDto accountDto) {
+        Document document = documentService.getDocumentWithPermission(accountDto.getDocumentId());
+        AccountRoleConfirmation roleConfirmation = accountRoleConfirmService
+                .createAttachedDocument(document, accountDto.getSignature(), accountDto.getDescription());
+        AccountRole accountRole = accountRoleRepository.findByCode(accountDto.getRole().getCode());
+        accountRoleLinkService.createRoleLink(getContextAccount(), roleConfirmation, accountRole);
     }
 }

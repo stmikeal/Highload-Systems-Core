@@ -1,6 +1,7 @@
 package ru.stroy.entity.datasource;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class AccountRoleLink extends IdEntity {
     @ManyToOne
     @JoinColumn(name = "account")
     @JsonBackReference
+    @JsonIgnore
     private Account account;
 
     @ManyToOne
@@ -24,5 +26,6 @@ public class AccountRoleLink extends IdEntity {
 
     @ManyToOne
     @JoinColumn(name = "confirm", referencedColumnName = "id")
+    @JsonIgnore
     private AccountRoleConfirmation confirm;
 }

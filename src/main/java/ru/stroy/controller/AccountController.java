@@ -5,6 +5,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.stroy.dto.request.AccountPutConfirmationDto;
 import ru.stroy.dto.request.AccountUpdateDto;
 import ru.stroy.entity.datasource.Account;
 import ru.stroy.services.AccountService;
@@ -29,8 +30,13 @@ public class AccountController {
     }
 
     @PostMapping
-    @ResponseBody
     public void setAccountInfo(@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
         accountService.updateAccountByDto(accountUpdateDto);
     }
+
+    @PostMapping("/confirm")
+    public void setConfirmation(@Valid @RequestBody AccountPutConfirmationDto accountDto) {
+        accountService.confirmAccountByDto(accountDto);
+    }
+
 }

@@ -31,13 +31,21 @@ public class RespondService {
     }
 
     public AdvertRespond setAdvertRespondByDto(AdvertRespondCreateDto advertRespondCreateDto, Long advertId) {
-        Advert advert = advertRepository
-                .findById(advertId).orElseThrow(() -> new IllegalArgumentException("Not found advert"));
+        advertRepository.findById(advertId).orElseThrow(() -> new IllegalArgumentException("Not found advert"));
         AdvertRespond advertRespond = advertRespondRepository.getReferenceById(advertId);
         advertRespond.setTitle(advertRespondCreateDto.getTitle());
         if(advertRespondCreateDto.getDescription() != null) {
             advertRespond.setText(advertRespondCreateDto.getDescription());
         }
         return advertRespondRepository.save(advertRespond);
+    }
+
+    public void deleteAdvertRespondByDto(Long advertId){
+        Advert advert = advertRepository
+                .findById(advertId).orElseThrow(() -> new IllegalArgumentException("Not found advert"));
+        AdvertRespond advertRespond = advertRespondRepository
+                .findByApplicantAndAdvert(accountService.getContextAccount(), advert)
+                .orElseThrow(() -> new IllegalArgumentException("Not found respond"));
+        advertRespondRepository.delete(advertRespond);
     }
 }

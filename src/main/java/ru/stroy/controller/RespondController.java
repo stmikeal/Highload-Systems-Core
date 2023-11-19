@@ -28,6 +28,10 @@ public class RespondController {
         respondService.setAdvertRespondByDto(advertRespondCreateDto, id);
     }
 
-
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void deleteAdvertRespond(@PositiveOrZero @PathVariable Long id){
+        respondService.deleteAdvertRespondByDto(id);
+    }
 
 }

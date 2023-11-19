@@ -55,4 +55,11 @@ public class RespondController {
                 .body(advertRespondRepository.findAll(PageRequest.of(offset, limit)));
     }
 
+    @PostMapping("/{advertId}/document/{documentId}")
+    @ResponseBody
+    public void attachDocumentRespond(@PositiveOrZero @PathVariable Long advertId,
+                                      @PositiveOrZero @PathVariable Long documentId){
+        respondService.attachDocumentRespond(advertId, documentId);
+    }
+
 }

@@ -8,6 +8,8 @@ import ru.stroy.entity.datasource.AdvertRespond;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.repositories.AdvertRespondRepository;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
+
 @Service
 @RequiredArgsConstructor
 public class RespondService {
@@ -16,15 +18,17 @@ public class RespondService {
     private final AdvertRepository advertRepository;
 
     public AdvertRespond createAdvertRespondByDto(AdvertRespondCreateDto advertRespondCreateDto) {
-        AdvertRespond advertRespond = new AdvertRespond();
 
+        Advert advert = advertRepository
+                .findById(advertRespondCreateDto.getAdvertId())
+                .orElseThrow(() -> new IllegalArgumentException("Not found advert"));
+        if (advertRespondRepository.findByApplicantAndAdvert(accountService.getContextAccount(), advert).isPresent()) {
+            throw new KeyAlreadyExistsException("Respond already exists");
+        }
+
+        AdvertRespond advertRespond = new AdvertRespond();
         advertRespond.setApplicant(accountService.getContextAccount());
-        advertRespond.setAdvert(
-                advertRepository.findById(
-                        advertRespondCreateDto.getAdvertId())
-                            .orElseThrow(() -> new IllegalArgumentException("No such advert")
-                )
-        );
+        advertRespond.setAdvert(advert);
         advertRespond.setTitle(advertRespondCreateDto.getTitle());
         advertRespond.setText(advertRespondCreateDto.getDescription());
         return advertRespondRepository.save(advertRespond);

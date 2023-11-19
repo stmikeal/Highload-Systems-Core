@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
@@ -24,7 +25,7 @@ public class RestResponseEntityExceptionHandler
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
-    @ExceptionHandler(value = { RuntimeException.class })
+    @ExceptionHandler(value = { RuntimeException.class, KeyAlreadyExistsException.class })
     protected ResponseEntity<?> handleConflict(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }

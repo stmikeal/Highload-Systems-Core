@@ -12,9 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DocumentPutDto {
-    @NotNull
-    @PositiveOrZero
-    private Long respondId;
     @Pattern(regexp = "(?:(?:http)|(?:https)):\\/\\/.+\\.(?:(?:com)|(?:ru))")
     private String url;
     @NotBlank

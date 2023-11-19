@@ -17,19 +17,6 @@ public class DocumentService {
     private final AdvertRespondService advertRespondService;
     private final AccountService accountService;
 
-    /*public Document putDocumentToRespondByDto(DocumentPutDto documentPutDto) throws ResourceAccessException {
-        if (!advertRespondService.isOwnedRespond(documentPutDto.getRespondId()))
-            throw new ResourceAccessException("User isn't applicant of respond");
-        Document document = new Document();
-        document.setUrl(documentPutDto.getUrl());
-        document.setDescription(documentPutDto.getDescription());
-        document.setTitle(documentPutDto.getTitle());
-        document.setAuthor(accountService.getContextAccount());
-        document = documentRepository.save(document);
-        documentRepository.attachToRespond(document.getId(), documentPutDto.getRespondId());
-        return document;
-    }*/
-
     public Document putDocumentByDto(DocumentPutDto documentPutDto) {
         Document document = new Document();
         document.setUrl(documentPutDto.getUrl());
@@ -41,7 +28,6 @@ public class DocumentService {
     }
 
     public List<Document> getDocumentsOfCurrentUser() {
-        Account account = accountService.getContextAccount();
-        return documentRepository.getApplicantDocuments(account.getId());
+        return documentRepository.findAllByAuthor(accountService.getContextAccount());
     }
 }

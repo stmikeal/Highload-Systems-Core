@@ -16,8 +16,6 @@ import ru.stroy.entity.datasource.Advert;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.services.AdvertService;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/advert")

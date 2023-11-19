@@ -1,6 +1,7 @@
 package ru.stroy.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +20,14 @@ public class RespondController {
     public void createAdvertRespond(@Valid @RequestBody AdvertRespondCreateDto advertRespondCreateDto) {
         respondService.createAdvertRespondByDto(advertRespondCreateDto);
     }
+
+    @PostMapping("/{id}")
+    @ResponseBody
+    public void setAdvertRespond(@Valid @RequestBody AdvertRespondCreateDto advertRespondCreateDto,
+                                 @PositiveOrZero @PathVariable Long id){
+        respondService.setAdvertRespondByDto(advertRespondCreateDto, id);
+    }
+
+
 
 }

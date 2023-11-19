@@ -3,6 +3,7 @@ package ru.stroy.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.stroy.dto.request.AdvertRespondCreateDto;
+import ru.stroy.entity.datasource.Advert;
 import ru.stroy.entity.datasource.AdvertRespond;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.repositories.AdvertRespondRepository;
@@ -26,6 +27,17 @@ public class RespondService {
         );
         advertRespond.setTitle(advertRespondCreateDto.getTitle());
         advertRespond.setText(advertRespondCreateDto.getDescription());
+        return advertRespondRepository.save(advertRespond);
+    }
+
+    public AdvertRespond setAdvertRespondByDto(AdvertRespondCreateDto advertRespondCreateDto, Long advertId) {
+        Advert advert = advertRepository
+                .findById(advertId).orElseThrow(() -> new IllegalArgumentException("Not found advert"));
+        AdvertRespond advertRespond = advertRespondRepository.getReferenceById(advertId);
+        advertRespond.setTitle(advertRespondCreateDto.getTitle());
+        if(advertRespondCreateDto.getDescription() != null) {
+            advertRespond.setText(advertRespondCreateDto.getDescription());
+        }
         return advertRespondRepository.save(advertRespond);
     }
 }

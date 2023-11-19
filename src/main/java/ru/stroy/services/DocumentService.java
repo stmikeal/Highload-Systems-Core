@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DocumentService {
     private final DocumentRepository documentRepository;
-    private final AdvertRespondService advertRespondService;
     private final AccountService accountService;
 
     public Document putDocumentByDto(DocumentPutDto documentPutDto) {

@@ -1,8 +1,6 @@
 package ru.stroy.entity.datasource;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,6 +11,10 @@ import ru.stroy.entity.basic.TimeManagedEntity;
 @Getter
 @Setter
 public class Document extends TimeManagedEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "author", referencedColumnName = "id", nullable = false)
+    private Account author;
 
     @Column(name = "url", nullable = false)
     private String url;

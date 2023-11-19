@@ -19,7 +19,7 @@ public class DocumentController {
 
     @PutMapping
     public void attachDocumentToRespond(@Valid @RequestBody DocumentPutDto documentPutDto) {
-        documentService.putDocumentToRespondByDto(documentPutDto);
+        documentService.putDocumentByDto(documentPutDto);
     }
 
     @GetMapping

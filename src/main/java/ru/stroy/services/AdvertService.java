@@ -1,12 +1,16 @@
 package ru.stroy.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.PermissionDeniedDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.stroy.dto.request.AdvertCreateDto;
+import ru.stroy.entity.datasource.Account;
 import ru.stroy.entity.datasource.Advert;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.repositories.AdvertTypeRepository;
 import ru.stroy.repositories.CurrencyTypeRepository;
+
+import java.nio.file.AccessDeniedException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +32,15 @@ public class AdvertService {
         advert.setTitle(advertCreateDto.getTitle());
         advert.setType(advertTypeRepository.findByCode(advertCreateDto.getAdvertType().getCode()));
         return advertRepository.save(advert);
+    }
+
+    public void deleteAdvert(Long advertId) throws Exception {
+        Advert advert = advertRepository
+                .findById(advertId).orElseThrow(() -> new IllegalArgumentException("Not found advert"));
+        Account account = accountService.getContextAccount();
+        if(!advert.getAuthor().getId().equals(account.getId())) {
+            throw new AccessDeniedException("The user is not owner of advert");
+        }
+        advertRepository.delete(advert);
     }
 }

@@ -48,4 +48,10 @@ public class AdvertController {
     public Advert getAdvert(@PositiveOrZero @PathVariable Long id) {
         return advertRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Advert not found"));
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void deleteAdvert(@PositiveOrZero @PathVariable Long id) throws Exception {
+        advertService.deleteAdvert(id);
+    }
 }

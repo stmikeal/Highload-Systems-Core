@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,7 @@ import ru.stroy.dto.request.*;
 import ru.stroy.entity.datasource.Login;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.repositories.security.LoginRepository;
+import ru.stroy.services.LoginService;
 
 import java.time.LocalDate;
 
@@ -37,6 +39,8 @@ public class ControllersTest {
     AuthenticationController authenticationController;
     @Autowired
     LoginRepository loginRepository;
+    @Autowired
+    LoginService loginService;
     @Autowired
     AdvertRepository advertRepository;
 
@@ -66,10 +70,16 @@ public class ControllersTest {
     private final static CompanyCreateDto contextCompany = new CompanyCreateDto(contextUsername, contextURL);
     private static Login actualLogin = null;
 
+    @PostConstruct
+    void postInit() {
+        RestAssured.baseURI = "http://localhost:" + port;
+        RegisterRequestDto requestLogin = new RegisterRequestDto(contextUsername, contextPassword);
+        if (!loginRepository.existsByUsername(contextUsername))
+            loginRepository.save(loginService.createLoginFromRequest(requestLogin));
+    }
+
     @BeforeEach
     void setUp() {
-        RestAssured.baseURI = "http://localhost:" + port;
-        authenticationController.registerUser(new RegisterRequestDto(contextUsername, contextPassword));
         advertRepository.deleteAll();
     }
 

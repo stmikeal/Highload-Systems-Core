@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.stroy.dto.enumeration.PermissionAccountEnum;
 import ru.stroy.entity.datasource.Login;
 
 import java.util.Collection;
@@ -15,9 +16,8 @@ public class LoginDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (getUsername().equals("admin"))
-            return List.of(new SimpleGrantedAuthority("ADMIN_ROLE"));
-        return List.of(new SimpleGrantedAuthority("USER"));
+        return List.of(new SimpleGrantedAuthority(
+                PermissionAccountEnum.getByCode(login.getAccount().getPermission()).getName()));
     }
 
     @Override

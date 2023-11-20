@@ -20,7 +20,7 @@ public class Account extends TimeManagedEntity {
     private String name = "";
 
     @Column(name = "avatar_url")
-    private String avatarUrl;
+    private String avatarUrl = "";
 
     @Column(name = "birth", nullable = false)
     private LocalDate birth = LocalDate.of(1980, 1, 1);
@@ -32,4 +32,8 @@ public class Account extends TimeManagedEntity {
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<AccountCompanyLink> positions;
+
+    @Column(name = "permission")
+    private Long permission = 0L;
+
 }

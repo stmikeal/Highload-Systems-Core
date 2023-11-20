@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ru.stroy.dto.request.RegisterRequestDto;
 import ru.stroy.repositories.security.LoginRepository;
+import ru.stroy.services.AccountService;
 import ru.stroy.services.LoginService;
 
 import java.time.Instant;
@@ -29,6 +30,7 @@ public class AuthenticationController {
     private JwtEncoder encoder;
     private final LoginRepository loginRepository;
     private final LoginService loginService;
+    private final AccountService accountService;
 
     @PostMapping("/login")
     public String authenticateUser(Authentication authentication) {
@@ -56,5 +58,17 @@ public class AuthenticationController {
             loginRepository.save(loginService.createLoginFromRequest(requestLogin));
             return ResponseEntity.ok("User successfully registered");
         }
+    }
+
+    @GetMapping("/approve/{id}")
+    @Secured("ADMIN_ROLE")
+    public void approveToModerator(@PathVariable Long id) {
+        accountService.approveAccount(id);
+    }
+
+    @GetMapping("/fire/{id}")
+    @Secured("ADMIN_ROLE")
+    public void fireFromModerator(@PathVariable Long id) {
+        accountService.fireAccount(id);
     }
 }

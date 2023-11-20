@@ -3,6 +3,7 @@ package ru.stroy.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ru.stroy.dto.enumeration.PermissionAccountEnum;
 import ru.stroy.dto.request.AccountPutConfirmationDto;
 import ru.stroy.dto.request.AccountUpdateDto;
 import ru.stroy.entity.datasource.*;
@@ -51,5 +52,19 @@ public class AccountService {
                 .createAttachedDocument(document, accountDto.getSignature(), accountDto.getDescription());
         AccountRole accountRole = accountRoleRepository.findByCode(accountDto.getRole().getCode());
         accountRoleLinkService.createRoleLink(getContextAccount(), roleConfirmation, accountRole);
+    }
+
+    public void approveAccount(Long id) {
+        Account account = accountRepository
+                .findById(id).orElseThrow(() -> new IllegalArgumentException("Account not found"));
+        account.setPermission(PermissionAccountEnum.Moderator.getCode());
+        accountRepository.save(account);
+    }
+
+    public void fireAccount(Long id) {
+        Account account = accountRepository
+                .findById(id).orElseThrow(() -> new IllegalArgumentException("Account not found"));
+        account.setPermission(PermissionAccountEnum.User.getCode());
+        accountRepository.save(account);
     }
 }

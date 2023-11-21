@@ -86,9 +86,7 @@ public class ControllersTest {
     }
 
     @BeforeEach
-    void setUp() {
-        advertRepository.deleteAll();
-    }
+    void setUp() {}
 
     private RequestSpecification whenAuth() {
         return
@@ -200,8 +198,8 @@ public class ControllersTest {
         basicPut("/respond", contextRespond);
         basicGet("/respond")
                 .body("content.title", hasItem(contextRespond.getTitle()))
-                .body("content.description", hasItem(contextRespond.getDescription()))
-                .body("content.advert.id", hasItem(contextRespond.getAdvertId()));
+                .body("content.text", hasItem(contextRespond.getDescription()))
+                .body("content.advert.id", hasItem(contextRespond.getAdvertId().intValue()));
     }
 
     @Test

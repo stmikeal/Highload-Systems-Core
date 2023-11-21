@@ -16,12 +16,14 @@ import ru.stroy.controller.AuthenticationController;
 import ru.stroy.dto.enumeration.AdvertTypeEnum;
 import ru.stroy.dto.enumeration.CurrencyTypeEnum;
 import ru.stroy.dto.request.*;
+import ru.stroy.entity.datasource.Advert;
 import ru.stroy.entity.datasource.Login;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.repositories.security.LoginRepository;
 import ru.stroy.services.LoginService;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -67,6 +69,11 @@ public class ControllersTest {
             contextDescription,
             contextPrice,
             CurrencyTypeEnum.Rub);
+    private final static AdvertRespondCreateDto contextRespond = new AdvertRespondCreateDto(
+            0L,
+            contextTitle,
+            contextDescription
+    );
     private final static CompanyCreateDto contextCompany = new CompanyCreateDto(contextUsername, contextURL);
     private static Login actualLogin = null;
 
@@ -182,6 +189,19 @@ public class ControllersTest {
                 .body("content.description", hasItem(contextAdvert.getDescription()))
                 .body("content.price", hasItem(contextAdvert.getPrice().intValue()))
                 .body("content.currency.code", hasItem(contextAdvert.getCurrency().getCode().intValue()));
+    }
+
+    @Test
+    void putSimpleRespond() {
+        basicPut("/advert", contextAdvert);
+        Optional<Advert> advert = advertRepository.findAll().stream().findFirst();
+        Assertions.assertTrue(advert.isPresent());
+        contextRespond.setAdvertId(advert.get().getId());
+        basicPut("/respond", contextRespond);
+        basicGet("/respond")
+                .body("content.title", hasItem(contextRespond.getTitle()))
+                .body("content.description", hasItem(contextRespond.getDescription()))
+                .body("content.advert.id", hasItem(contextRespond.getAdvertId()));
     }
 
     @Test

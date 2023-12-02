@@ -11,6 +11,5 @@ import ru.stroy.dto.enumeration.AreaCompanyEnum;
 @Getter
 @Setter
 public class AttachCompanyAreaDto {
-    @NotNull
     private AreaCompanyEnum area;
 }

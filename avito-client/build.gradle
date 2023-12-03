@@ -16,6 +16,10 @@ repositories {
     maven { url 'https://repo.spring.io/milestone' }
 }
 
+ext {
+    set('springCloudVersion', "2023.0.0-RC1")
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
@@ -32,7 +36,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '6.1.2'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '4.0.3'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
     implementation 'org.flywaydb:flyway-core'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -43,6 +47,12 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:1.17.6"
     testImplementation "org.testcontainers:junit-jupiter:1.17.6"
     testImplementation 'io.rest-assured:rest-assured'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.named('test') {

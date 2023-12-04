@@ -10,9 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.stroy.dto.request.AccountPutConfirmationDto;
 import ru.stroy.dto.request.DocumentPutDto;
 import ru.stroy.entity.datasource.Document;
 import ru.stroy.repositories.DocumentRepository;
+import ru.stroy.services.AccountService;
 import ru.stroy.services.DocumentService;
 
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.List;
 public class DocumentController {
     private final DocumentService documentService;
     private final DocumentRepository documentRepository;
+    private final AccountService accountService;
 
     @PutMapping
     public void attachDocumentToRespond(@Valid @RequestBody DocumentPutDto documentPutDto) {
@@ -31,7 +34,7 @@ public class DocumentController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Document>> getAllAdvert(
+    public ResponseEntity<Page<Document>> getDocument(
             @RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
             @RequestParam(value = "limit", defaultValue = "20") @Min(1) @Max(50) Integer limit
     ) {
@@ -40,5 +43,10 @@ public class DocumentController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(documentRepository.findAll(PageRequest.of(offset, limit)));
+    }
+
+    @PostMapping("/confirm")
+    public void setConfirmation(@Valid @RequestBody AccountPutConfirmationDto accountDto) {
+        accountService.confirmAccountByDto(accountDto);
     }
 }

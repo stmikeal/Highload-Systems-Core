@@ -1,0 +1,25 @@
+server:
+  port: 8082
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+spring:
+  application:
+    name: account-server
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      platform: postgres
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driverClassName: org.postgresql.Driver
+
+jwt:
+  private.key: classpath:key
+  public.key: classpath:key.pub

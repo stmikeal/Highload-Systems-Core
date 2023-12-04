@@ -21,6 +21,8 @@ ext {
 }
 
 dependencies {
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+    implementation project(':shared-module')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -37,7 +39,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
-    implementation 'org.flywaydb:flyway-core'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -47,6 +48,9 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:1.17.6"
     testImplementation "org.testcontainers:junit-jupiter:1.17.6"
     testImplementation 'io.rest-assured:rest-assured'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    implementation 'org.flywaydb:flyway-core'
+
 }
 
 dependencyManagement {

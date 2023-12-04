@@ -20,10 +20,13 @@ public class GatewayApplication {
         return builder.routes()
                 .route("auth_route", r -> r.path("/auth/**")
                         .filters(f -> f.rewritePath("/auth/(?<login>.*)", "/${login}"))
-                        .uri("lb://avito-client"))
+                        .uri("lb://idp-server"))
                 .route("avito_route", r -> r.path("/api/**")
                         .filters(f -> f.rewritePath("/api/(?<login>.*)", "/${login}"))
                         .uri("lb://avito-client"))
+                .route("account_route", r -> r.path("/user/**")
+                        .filters(f -> f.rewritePath("/user/(?<login>.*)", "/${login}"))
+                        .uri("lb://account-server"))
                 .build();
     }
 }

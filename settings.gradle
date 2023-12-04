@@ -1,7 +1,9 @@
-rootProject.name = "avito"
+rootProject.name = 'avito'
 
-include("avito-client")
-include("eureka-server")
-include("gateway")
-include("IDP-server")
+include 'avito-client'
+include 'eureka-server'
+include 'gateway'
+include 'IDP-server'
+include 'shared-module'
+include 'account-server'
 

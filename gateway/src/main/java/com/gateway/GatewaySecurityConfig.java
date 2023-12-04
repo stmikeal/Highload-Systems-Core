@@ -37,19 +37,10 @@ public class GatewaySecurityConfig {
 
     @Value("${jwt.public.key}")
     private RSAPublicKey public_key;
-    @Value("${jwt.private.key}")
-    private RSAPrivateKey private_key;
 
     @Bean
     ReactiveJwtDecoder jwtDecoder() {
         return NimbusReactiveJwtDecoder.withPublicKey(this.public_key).build();
-    }
-
-    @Bean
-    JwtEncoder jwtEncoder() {
-        JWK jwk = new RSAKey.Builder(this.public_key).privateKey(this.private_key).build();
-        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-        return new NimbusJwtEncoder(jwks);
     }
 
     @Bean

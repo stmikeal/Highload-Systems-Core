@@ -7,3 +7,19 @@ eureka:
 spring:
   application:
     name: idp-server
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      platform: postgres
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driverClassName: org.postgresql.Driver
+
+jwt:
+  private.key: classpath:key
+  public.key: classpath:key.pub

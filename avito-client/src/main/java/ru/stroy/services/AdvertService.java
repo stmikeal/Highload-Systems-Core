@@ -15,10 +15,10 @@ import java.nio.file.AccessDeniedException;
 @RequiredArgsConstructor
 public class AdvertService {
     private final CompanyService companyService;
-    private final AccountService accountService;
     private final CurrencyTypeRepository currencyTypeRepository;
     private final AdvertTypeRepository advertTypeRepository;
     private final AdvertRepository advertRepository;
+    private final AccountService accountService;
 
     public Advert createAdvertByDto(AdvertCreateDto advertCreateDto) {
         Advert advert = new Advert();

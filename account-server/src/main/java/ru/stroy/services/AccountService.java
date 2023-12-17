@@ -1,57 +1,57 @@
 package ru.stroy.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 import ru.stroy.dto.enumeration.PermissionAccountEnum;
-import ru.stroy.dto.request.AccountPutConfirmationDto;
 import ru.stroy.dto.request.AccountUpdateDto;
-import ru.stroy.entity.datasource.*;
+import ru.stroy.entity.datasource.Account;
 import ru.stroy.feign.IdpClientFeignClient;
 import ru.stroy.repositories.AccountRepository;
-import ru.stroy.repositories.security.LoginRepository;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
-    private final AccountRepository accountRepository;
-    private final LoginRepository loginRepository;
+    @Autowired
+    private AccountRepository accountRepository;
     private final IdpClientFeignClient idpClientFeignClient;
 
-    public Account createEmptyAccount() {
+    public Mono<Account> createEmptyAccount() {
         Account account = new Account();
         return accountRepository.save(account);
     }
 
-    public Account getContextAccount() {
-        Long id = idpClientFeignClient.getContextAccount().getId();
-        return accountRepository.findById(id).get();
+    public Mono<Account> getContextAccount() {
+        return Mono.just(idpClientFeignClient.getContextAccount())
+                .map(Account::getId)
+                .flatMap(accountRepository::findById);
     }
 
     public Account updateAccountByDto(AccountUpdateDto accountUpdateDto) {
-        Account account = getContextAccount();
+        Account account = getContextAccount().block();
         account.setName(accountUpdateDto.getName());
         account.setBirth(accountUpdateDto.getBirth());
         account.setAvatarUrl(accountUpdateDto.getAvatarUrl());
-        return accountRepository.save(account);
+        return accountRepository.save(account).block();
     }
 
-    public Account getAccountById(Long id) {
-        return accountRepository.findById(id).orElse(new Account());
+    public Mono<Account> getAccountById(Long id) {
+        return accountRepository.findById(id);
     }
 
     public void approveAccount(Long id) {
-        Account account = accountRepository
-                .findById(id).orElseThrow(() -> new IllegalArgumentException("Account not found"));
+        Account account = accountRepository.findById(id)
+                .blockOptional()
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         account.setPermission(PermissionAccountEnum.Moderator.getCode());
         accountRepository.save(account);
     }
 
     public void fireAccount(Long id) {
-        Account account = accountRepository
-                .findById(id).orElseThrow(() -> new IllegalArgumentException("Account not found"));
+        Account account = accountRepository.findById(id)
+                .blockOptional()
+                .orElseThrow(() -> new IllegalArgumentException("Account not found"));
         account.setPermission(PermissionAccountEnum.User.getCode());
         accountRepository.save(account);
     }

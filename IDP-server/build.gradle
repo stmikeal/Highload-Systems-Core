@@ -21,11 +21,14 @@ ext {
 }
 
 dependencies {
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     implementation project(':shared-module')
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'io.projectreactor:reactor-core:3.6.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

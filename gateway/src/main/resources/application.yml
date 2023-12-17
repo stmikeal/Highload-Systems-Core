@@ -6,6 +6,8 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka
 
 spring:
+  config:
+    import: 'configserver:http://localhost:8888'
   main:
     web-application-type: reactive
     allow-bean-definition-overriding: true
@@ -17,9 +19,3 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-
-jwt:
-  private:
-    key: classpath:key
-  public:
-    key: classpath:key.pub

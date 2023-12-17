@@ -5,6 +5,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 import ru.stroy.dto.request.AccountUpdateDto;
 import ru.stroy.entity.datasource.Account;
 import ru.stroy.services.AccountService;
@@ -18,13 +19,13 @@ public class AccountController {
 
     @GetMapping
     @ResponseBody
-    public Account getAccountInfo() {
+    public Mono<Account> getAccountInfo() {
        return accountService.getContextAccount();
     }
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Account getOtherAccountInfo(@PositiveOrZero @PathVariable Long id) {
+    public Mono<Account> getOtherAccountInfo(@PositiveOrZero @PathVariable Long id) {
         return accountService.getAccountById(id);
     }
 

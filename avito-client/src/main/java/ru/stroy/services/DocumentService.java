@@ -41,7 +41,8 @@ public class DocumentService {
 
     public Document getDocumentWithPermission(Long documentId) {
         Document document = documentRepository
-                .findById(documentId).orElseThrow(() -> new IllegalArgumentException("Not found such document"));
+                .findById(documentId)
+                .orElseThrow(() -> new IllegalArgumentException("Not found such document"));
         Account account = getContextAccount();
         if (!document.getAuthor().getId().equals(account.getId())) {
             throw new AccessDeniedException("Cannot access this document");

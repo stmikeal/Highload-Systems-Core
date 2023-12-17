@@ -21,11 +21,13 @@ ext {
 }
 
 dependencies {
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
     implementation project(':shared-module')
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -49,6 +51,7 @@ dependencies {
     testImplementation "org.testcontainers:junit-jupiter:1.17.6"
     testImplementation 'io.rest-assured:rest-assured'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
     implementation 'org.flywaydb:flyway-core'
 
 }

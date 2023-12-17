@@ -1,9 +1,10 @@
 package ru.stroy.repositories;
 
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.stroy.entity.datasource.Account;
-import ru.stroy.repositories.basic.TimeManagedRepository;
 
 @Repository
-public interface AccountRepository extends TimeManagedRepository<Account> {
+public interface AccountRepository extends R2dbcRepository<Account, Long> {
 }

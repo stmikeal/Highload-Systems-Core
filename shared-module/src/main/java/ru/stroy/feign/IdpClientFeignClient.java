@@ -3,6 +3,7 @@ package ru.stroy.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import reactor.core.publisher.Mono;
 import ru.stroy.entity.datasource.Account;
 
 @FeignClient("idp-server")

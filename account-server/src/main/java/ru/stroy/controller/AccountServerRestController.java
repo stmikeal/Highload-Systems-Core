@@ -14,6 +14,6 @@ public class AccountServerRestController {
 
     @PutMapping(path = "/empty", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Long createEmptyAccount () {
-        return accountService.createEmptyAccount().getId();
+        return accountService.createEmptyAccount().block().getId();
     }
 }

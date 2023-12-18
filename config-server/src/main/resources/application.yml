@@ -1,5 +1,9 @@
 server:
   port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}
 spring:
   application:
     name: config-server
@@ -7,5 +11,6 @@ spring:
     config:
       server:
         git:
+          default-label: master
           uri: https://github.com/stmikeal/Highload-System-Config
           clone-on-start: true

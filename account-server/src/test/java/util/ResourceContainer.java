@@ -1,11 +1,17 @@
 package util;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import ru.stroy.dto.security.LoginDetails;
 import ru.stroy.entity.datasource.Account;
 import ru.stroy.entity.datasource.Login;
 
 public class ResourceContainer {
 
-    public static final Long falseId = 123456l;
+    public static final Long falseId = 123456L;
+
+    public static final String falseUsername = "Eric";
+
+    public static final String trueUsername = "Bob";
 
     public static final Login testLogin1 = createLogin(57875L, "password1");
 
@@ -27,4 +33,6 @@ public class ResourceContainer {
         login.setPassword(password);
         return login;
     }
+
+
 }

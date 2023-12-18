@@ -11,8 +11,6 @@ import ru.stroy.feign.IdpClientFeignClient;
 import ru.stroy.repositories.AccountRepository;
 import ru.stroy.services.AccountService;
 
-import java.util.Optional;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static util.ResourceContainer.*;

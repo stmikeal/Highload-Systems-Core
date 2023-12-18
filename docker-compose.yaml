@@ -5,26 +5,130 @@ volumes:
 
 services:
 
-  java_application:
-    build: .
+  avito-client:
+    build:
+      context: .
+      dockerfile: avito-client/Dockerfile
     restart: always
-    container_name: highload-java
+    container_name: avito-client
     ports:
-    - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - "8081:8081"
     depends_on:
-      - postgresql_database
+      - database
+      - eureka-server
+      - config-server
     environment:
       - TZ=Europe/Moscow
-      - POSTGRES_URL=jdbc:postgresql://postgresql_database:5432/postgres
+      - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
       - POSTGRES_USERNAME=postgres
       - POSTGRES_PASSWORD=postgres
-      - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
 
-  postgresql_database:
+  account-server:
+    build:
+      context: .
+      dockerfile: account-server/Dockerfile
+    restart: always
+    container_name: account-server
+    ports:
+    - "8082:8082"
+    depends_on:
+      - database
+      - eureka-server
+      - config-server
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_URL=r2dbc:postgresql://database:5432/postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+  config-server:
+    build:
+      context: .
+      dockerfile: config-server/Dockerfile
+    restart: always
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    depends_on:
+      - database
+      - eureka-server
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+  eureka-server:
+    build:
+      context: .
+      dockerfile: eureka-server/Dockerfile
+    restart: always
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - database
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+  gateway:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    restart: always
+    container_name: gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+      - eureka-server
+      - config-server
+      - account-server
+      - avito-client
+      - idp-server
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+  idp-server:
+    build:
+      context: .
+      dockerfile: IDP-server/Dockerfile
+    restart: always
+    container_name: idp-server
+    ports:
+      - "9000:9000"
+    depends_on:
+      - database
+      - eureka-server
+      - config-server
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+
+  database:
     image: postgres:15
-    container_name: postgresql_databse
+    container_name: database
     expose:
       - "5432"
     volumes:

@@ -3,11 +3,11 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: ${EUREKA_URL}
 
 spring:
   config:
-    import: 'configserver:http://localhost:8888'
+    import: configserver:${CONFIG_URL}
   application:
     name: avito-client
   jpa:
@@ -18,9 +18,9 @@ spring:
     init:
       platform: postgres
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     driverClassName: org.postgresql.Driver
 
 jwt:

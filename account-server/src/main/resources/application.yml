@@ -3,19 +3,19 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: ${EUREKA_URL}
 
 spring:
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
   cloud:
     openfeign:
       circuitbreaker:
         enabled: true
   config:
-    import: 'configserver:http://localhost:8888'
+    import: configserver:${CONFIG_URL}
   application:
     name: account-server
   jpa:

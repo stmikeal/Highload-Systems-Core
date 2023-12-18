@@ -13,8 +13,7 @@ import ru.stroy.repositories.AccountRepository;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
     private final IdpClientFeignClient idpClientFeignClient;
 
     public Mono<Account> createEmptyAccount() {

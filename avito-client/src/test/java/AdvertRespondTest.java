@@ -17,7 +17,7 @@ import static util.ResourceContainer.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class AvitoClientTestAdvert {
+public class AdvertRespondTest {
     private static AdvertRespondService advertRespondService;
 
 

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.stroy.dto.request.AdvertCreateDto;
 import ru.stroy.entity.datasource.Advert;
+import ru.stroy.feign.NotificationFeignClient;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.services.AdvertService;
 
@@ -23,6 +26,7 @@ import ru.stroy.services.AdvertService;
 public class AdvertController {
     private final AdvertService advertService;
     private final AdvertRepository advertRepository;
+    private final NotificationFeignClient notificationFeignClient;
 
     @PutMapping
     public void createAdvert(@Valid @RequestBody AdvertCreateDto advertCreateDto) {
@@ -43,8 +47,17 @@ public class AdvertController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Advert getAdvert(@PositiveOrZero @PathVariable Long id) {
-        return advertRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Advert not found"));
+    public Advert getAdvert(@PositiveOrZero @PathVariable Long id) throws ParseException {
+        Advert advert = advertRepository
+                .findById(id).orElseThrow(() -> new IllegalArgumentException("Advert not found"));
+        JSONObject json = new JSONObject();
+        json.put("address", advert.getAuthor().getEmail());
+        json.put("pattern", "Seen");
+        json.put("subject", "Объявление просмотрено");
+        json.put("name", advert.getAuthor().getName());
+        json.put("title", advert.getTitle());
+        notificationFeignClient.sendNotification(json.toJSONString());
+        return advert;
     }
 
     @DeleteMapping("/{id}")

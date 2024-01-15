@@ -18,4 +18,5 @@ public class AccountUpdateDto {
     private String avatarUrl;
     @Past
     private LocalDate birth;
+    private String email;
 }

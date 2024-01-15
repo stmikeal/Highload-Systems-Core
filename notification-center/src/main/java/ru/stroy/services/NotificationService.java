@@ -1,13 +1,12 @@
-package ru.stroy.notificationcenter.services;
+package ru.stroy.services;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.message.SimpleMessage;
 import org.json.simple.JSONObject;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import ru.stroy.exceptions.JSONParseKeyException;
-import ru.stroy.notificationcenter.repositories.NotificationRepository;
+import ru.stroy.repositories.NotificationRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class NotificationService {
         String address = json.get("address").toString();
         String subject = json.get("subject").toString();
         for (var key : json.keySet()) {
-            pattern = pattern.replaceAll("?{" + key.toString() +"}", json.get(key).toString());
+            pattern = pattern.replaceAll("\\{" + key.toString() + "}", json.get(key).toString());
         }
         javaMailSender.send(createMail(address, subject, pattern));
     }

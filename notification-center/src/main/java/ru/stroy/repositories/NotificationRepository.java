@@ -1,4 +1,4 @@
-package ru.stroy.notificationcenter.repositories;
+package ru.stroy.repositories;
 
 import org.springframework.stereotype.Repository;
 import ru.stroy.entity.datasource.NotificationPattern;

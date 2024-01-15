@@ -35,4 +35,6 @@ public class Account extends TimeManagedEntity {
     @Column(name = "permission")
     private Long permission = 0L;
 
+    @Column(name = "email")
+    private String email;
 }

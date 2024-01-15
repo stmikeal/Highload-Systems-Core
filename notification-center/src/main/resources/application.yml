@@ -8,22 +8,22 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: systemshighload@gmail.com
-    password: QWE!rty123
+    username: 'systemshighload@gmail.com'
+    password: 'njlzsfozqbrgjmjp'
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
-  config:
-    import: configserver:${CONFIG_URL}
   application:
     name: notification-center
   jpa:
     database: POSTGRESQL
     hibernate:
       ddl-auto: none
+  config:
+    import: configserver:${CONFIG_URL}
   sql:
     init:
       platform: postgres

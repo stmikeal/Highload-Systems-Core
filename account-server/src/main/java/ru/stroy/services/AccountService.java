@@ -32,6 +32,7 @@ public class AccountService {
         account.setName(accountUpdateDto.getName());
         account.setBirth(accountUpdateDto.getBirth());
         account.setAvatarUrl(accountUpdateDto.getAvatarUrl());
+        account.setEmail(accountUpdateDto.getEmail());
         return accountRepository.save(account).block();
     }
 

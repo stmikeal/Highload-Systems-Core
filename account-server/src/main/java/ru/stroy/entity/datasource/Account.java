@@ -31,4 +31,7 @@ public class Account {
     @Column("permission")
     private Long permission = 0L;
 
+    @Column("email")
+    private String email;
+
 }

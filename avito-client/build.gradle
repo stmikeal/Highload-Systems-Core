@@ -21,6 +21,11 @@ ext {
 }
 
 dependencies {
+    implementation 'org.springframework.kafka:spring-kafka'
+
+
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
+
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'

@@ -8,4 +8,5 @@ include 'shared-module'
 include 'account-server'
 include 'config-server'
 include 'notification-center'
+include 'file-server'
 

@@ -1,5 +1,6 @@
 package ru.stroy.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -23,6 +24,7 @@ import ru.stroy.services.AdvertService;
 @RestController
 @RequestMapping("/advert")
 @Validated
+@SecurityRequirement(name = "javainuseapi")
 public class AdvertController {
     private final AdvertService advertService;
     private final AdvertRepository advertRepository;

@@ -1,0 +1,27 @@
+server:
+  port: 9091
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL}
+spring:
+  servlet:
+    multipart:
+      max-file-size: 24MB
+      max-request-size: 24MB
+  application:
+    name: file-server
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
+  config:
+    import: configserver:${CONFIG_URL}
+  sql:
+    init:
+      platform: postgres
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driverClassName: org.postgresql.Driver

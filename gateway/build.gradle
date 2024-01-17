@@ -21,6 +21,8 @@ ext {
 }
 
 dependencies {
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
+    
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'

@@ -1,13 +1,13 @@
-name: push account-server image to dockerhub
+name: push IDP-server image to dockerhub
 
 on:
     push:
         paths:
-            - account-server/**
+            - IDP-server/**
         branches: [ "master" ]
 
 env:
-    SERVICE_NAME: account-server
+    SERVICE_NAME: idp-server
 
 jobs:
     dockerhub:
@@ -43,7 +43,7 @@ jobs:
                       git pull
                       docker container stop $(docker ps -a --format '{{.Names}}' | grep ^${{ env.SERVICE_NAME }})
                       docker container rm $(docker ps -a --filter name=${{ env.SERVICE_NAME }}* -aq)
-                      docker image rm highperformancesystems-${{ env.SERVICE_NAME }}
+                      docker image rm highloadsystem_${{ env.SERVICE_NAME }}
                       docker compose up -d ${{ env.SERVICE_NAME }}
 #                      docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.SERVICE_NAME }}
 #                      docker run --network=highperformancesystems_default \

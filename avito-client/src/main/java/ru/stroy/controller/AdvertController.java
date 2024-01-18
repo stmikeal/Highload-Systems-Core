@@ -70,6 +70,7 @@ public class AdvertController {
                 "Новость просмотрена",
                 advert.getAuthor().getName(),
                 advert.getTitle());
+
         kafkaTemplate.send("server.notification", message);
         return advert;
     }

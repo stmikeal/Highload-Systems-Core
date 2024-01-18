@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +32,13 @@ public class AdvertController {
     private final AdvertService advertService;
     private final AdvertRepository advertRepository;
     private final KafkaTemplate<Long, Message> kafkaTemplate;
+    @Value("${ping.value}")
+    private String ping;
+
+    @GetMapping("/ping")
+    public @ResponseBody String pingMethod() {
+        return ping;
+    }
 
     @Operation(summary = "Create new advert")
     @PutMapping

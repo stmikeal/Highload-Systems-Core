@@ -1,5 +1,7 @@
 package ru.stroy.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -21,15 +23,18 @@ import ru.stroy.services.CompanyService;
 @RestController
 @RequestMapping("/company")
 @Validated
+@Tag(name = "Company", description = "Module for working with companies")
 public class CompanyController {
     private final CompanyService companyService;
     private final CompanyRepository companyRepository;
 
+    @Operation(summary = "Create new company")
     @PutMapping
     public void createCompany(@Valid @RequestBody CompanyCreateDto companyCreateDto) {
         companyService.createCompanyByCurrentUser(companyCreateDto);
     }
 
+    @Operation(summary = "Get list of companies")
     @GetMapping
     public Page<Company> getAll(
             @RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
@@ -38,18 +43,21 @@ public class CompanyController {
         return companyRepository.findAll(PageRequest.of(offset, limit));
     }
 
+    @Operation(summary = "Add new employee to your company")
     @PostMapping("/account/{id}")
     public void attachEmployee(@PositiveOrZero @PathVariable Long id,
                                @Valid @RequestBody AttachCompanyAccountDto attachCompanyAccountDto) {
         companyService.attachEmployeeToCompany(id, attachCompanyAccountDto);
     }
 
+    @Operation(summary = "Attach new area to company")
     @PostMapping("/area/{id}")
     public void attachArea(@PositiveOrZero @PathVariable Long id,
                            @Valid @RequestBody AttachCompanyAreaDto attachCompanyAreaDto) {
         companyService.attachAreaToCompany(id, attachCompanyAreaDto);
     }
 
+    @Operation(summary = "Add new tariff to company")
     @PostMapping("/tariff/{id}")
     public void attachTariff(@PositiveOrZero @PathVariable Long id,
                              @Valid @RequestBody AttachCompanyTariffDto attachCompanyTariffDto) {

@@ -1,6 +1,8 @@
 package ru.stroy.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,16 +26,19 @@ import ru.stroy.services.AdvertService;
 @RequestMapping("/advert")
 @Validated
 @SecurityRequirement(name = "avito")
+@Tag(name = "Advert", description = "Module for working with adverts")
 public class AdvertController {
     private final AdvertService advertService;
     private final AdvertRepository advertRepository;
     private final KafkaTemplate<Long, Message> kafkaTemplate;
 
+    @Operation(summary = "Create new advert")
     @PutMapping
     public void createAdvert(@Valid @RequestBody AdvertCreateDto advertCreateDto) {
         advertService.createAdvertByDto(advertCreateDto);
     }
 
+    @Operation(summary = "Get list of adverts")
     @GetMapping
     public ResponseEntity<Page<Advert>> getAllAdvert(
             @RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
@@ -46,6 +51,7 @@ public class AdvertController {
                 .body(advertRepository.findAll(PageRequest.of(offset, limit)));
     }
 
+    @Operation(summary = "Get advert by id")
     @GetMapping("/{id}")
     @ResponseBody
     public Advert getAdvert(@PositiveOrZero @PathVariable Long id) {
@@ -60,6 +66,7 @@ public class AdvertController {
         return advert;
     }
 
+    @Operation(summary = "Delete advert by id")
     @DeleteMapping("/{id}")
     @ResponseBody
     public void deleteAdvert(@PositiveOrZero @PathVariable Long id) {

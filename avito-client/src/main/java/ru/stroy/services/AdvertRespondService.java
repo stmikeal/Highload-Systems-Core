@@ -18,7 +18,7 @@ public class AdvertRespondService {
         Optional<AdvertRespond> respond = advertRespondRepository.findById(id);
         return
                 respond.isPresent() &&
-                accountService.getContextAccount().getId()
-                        .equals(respond.get().getApplicant().getId());
+                        accountService.getContextAccount().getId()
+                                .equals(respond.get().getApplicant().getId());
     }
 }

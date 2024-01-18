@@ -20,7 +20,7 @@ public class AccountController {
     @GetMapping
     @ResponseBody
     public Mono<Account> getAccountInfo() {
-       return accountService.getContextAccount();
+        return accountService.getContextAccount();
     }
 
     @GetMapping("/{id}")

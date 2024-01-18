@@ -25,7 +25,3 @@ spring:
   sql:
     init:
       platform: postgres
-
-jwt:
-  private.key: classpath:key
-  public.key: classpath:key.pub

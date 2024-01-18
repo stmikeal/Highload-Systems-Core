@@ -17,8 +17,6 @@ import ru.stroy.repositories.DocumentRepository;
 import ru.stroy.services.AccountService;
 import ru.stroy.services.DocumentService;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/document")
@@ -34,15 +32,10 @@ public class DocumentController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Document>> getDocument(
-            @RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,
-            @RequestParam(value = "limit", defaultValue = "20") @Min(1) @Max(50) Integer limit
-    ) {
+    public ResponseEntity<Page<Document>> getDocument(@RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset, @RequestParam(value = "limit", defaultValue = "20") @Min(1) @Max(50) Integer limit) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_RANGE, String.valueOf(documentRepository.count()));
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(documentRepository.findAll(PageRequest.of(offset, limit)));
+        return ResponseEntity.ok().headers(headers).body(documentRepository.findAll(PageRequest.of(offset, limit)));
     }
 
     @PostMapping("/confirm")

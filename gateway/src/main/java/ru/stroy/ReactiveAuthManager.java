@@ -1,4 +1,4 @@
-package com.gateway;
+package ru.stroy;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;

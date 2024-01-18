@@ -13,11 +13,11 @@ import ru.stroy.repositories.AccountRoleLinkRepository;
 public class AccountRoleLinkService {
     private final AccountRoleLinkRepository accountRoleLinkRepository;
 
-    public AccountRoleLink createRoleLink(Account account, AccountRoleConfirmation confirm, AccountRole role) {
+    public void createRoleLink(Account account, AccountRoleConfirmation confirm, AccountRole role) {
         AccountRoleLink accountRoleLink = new AccountRoleLink();
         accountRoleLink.setAccount(account);
         accountRoleLink.setConfirm(confirm);
         accountRoleLink.setRole(role);
-        return accountRoleLinkRepository.save(accountRoleLink);
+        accountRoleLinkRepository.save(accountRoleLink);
     }
 }

@@ -13,12 +13,6 @@ import java.time.Duration;
 public class Resilience4JConfig {
     @Bean
     Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
-        return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-                .circuitBreakerConfig(
-                        CircuitBreakerConfig.from(CircuitBreakerConfig.ofDefaults())
-                                .slowCallDurationThreshold(Duration.ofSeconds(10L))
-                                .slidingWindowSize(3).build()
-                )
-                .build());
+        return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id).circuitBreakerConfig(CircuitBreakerConfig.from(CircuitBreakerConfig.ofDefaults()).slowCallDurationThreshold(Duration.ofSeconds(10L)).slidingWindowSize(3).build()).build());
     }
 }

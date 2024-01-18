@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.1'
+    id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -26,20 +26,31 @@ ext {
 }
 
 dependencies {
+    // Shared models
     implementation project(':shared-module')
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '6.1.2'
-    compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
+
+    // Security
+    implementation 'org.springframework.security:spring-security-core:6.1.2'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    // Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // Eureka
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

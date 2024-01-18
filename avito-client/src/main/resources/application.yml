@@ -4,7 +4,7 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL}
-
+kafka.server: ${KAFKA_URL}
 spring:
   config:
     import: configserver:${CONFIG_URL}
@@ -22,7 +22,3 @@ spring:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driverClassName: org.postgresql.Driver
-
-jwt:
-  private.key: classpath:key
-  public.key: classpath:key.pub

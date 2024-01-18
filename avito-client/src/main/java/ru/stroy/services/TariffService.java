@@ -14,12 +14,12 @@ public class TariffService {
     private final TariffRepository tariffRepository;
     private final CurrencyTypeRepository currencyTypeRepository;
 
-    public Tariff createTariffByDto(Company company, AttachCompanyTariffDto attach) {
+    public void createTariffByDto(Company company, AttachCompanyTariffDto attach) {
         Tariff tariff = new Tariff();
         tariff.setCompany(company);
         tariff.setCurrency(currencyTypeRepository.findByCode(attach.getCurrency().getCode()));
         tariff.setLimit(attach.getWeight());
         tariff.setPrice(attach.getPrice());
-        return tariffRepository.save(tariff);
+        tariffRepository.save(tariff);
     }
 }

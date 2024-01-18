@@ -11,5 +11,9 @@ import ru.stroy.entity.basic.IdEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message extends IdEntity {
-    private String json;
+    private String address;
+    private String pattern;
+    private String subject;
+    private String name;
+    private String title;
 }

@@ -21,8 +21,8 @@ public class Area extends CodeEntity {
     private String description;
 
     @ManyToMany
-    @JoinTable(name="company_area_link",
-            joinColumns=@JoinColumn(name="area"),
-            inverseJoinColumns=@JoinColumn(name="company"))
+    @JoinTable(name = "company_area_link",
+            joinColumns = @JoinColumn(name = "area"),
+            inverseJoinColumns = @JoinColumn(name = "company"))
     private List<Company> companies;
 }

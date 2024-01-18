@@ -23,7 +23,7 @@ public class AccountService {
         return login.map(Login::getAccount).orElse(new Account());
     }
 
-    public Account createEmptyAccount () {
+    public Account createEmptyAccount() {
         Long id = accountClientFeignClient.createEmptyAccount();
         return accountRepository.findById(id).get();
     }

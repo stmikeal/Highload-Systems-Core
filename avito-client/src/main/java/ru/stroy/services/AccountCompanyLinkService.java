@@ -15,13 +15,13 @@ public class AccountCompanyLinkService {
     private final AccountCompanyLinkRepository accountCompanyLinkRepository;
     private final AccessRepository accessRepository;
 
-    public AccountCompanyLink createLink(Account account, AccessCompanyEnum access, Company company, String position) {
+    public void createLink(Account account, AccessCompanyEnum access, Company company, String position) {
         AccountCompanyLink accountCompanyLink = new AccountCompanyLink();
         accountCompanyLink.setAccount(account);
         accountCompanyLink.setAccess(accessRepository.findByCode(access.getCode()));
         accountCompanyLink.setPosition(position);
         accountCompanyLink.setCompany(company);
-        return accountCompanyLinkRepository.save(accountCompanyLink);
+        accountCompanyLinkRepository.save(accountCompanyLink);
     }
 
     public Boolean hasEditPermission(Long accountId, Long companyId) {
@@ -29,8 +29,8 @@ public class AccountCompanyLinkService {
                 accountCompanyLinkRepository
                         .existsAccountCompanyLinkByAccount_IdAndCompany_IdAndAccess_Code
                                 (accountId, companyId, AccessCompanyEnum.Owner.getCode()) ||
-                accountCompanyLinkRepository
-                        .existsAccountCompanyLinkByAccount_IdAndCompany_IdAndAccess_Code
-                                (accountId, companyId, AccessCompanyEnum.Moderator.getCode());
+                        accountCompanyLinkRepository
+                                .existsAccountCompanyLinkByAccount_IdAndCompany_IdAndAccess_Code
+                                        (accountId, companyId, AccessCompanyEnum.Moderator.getCode());
     }
 }

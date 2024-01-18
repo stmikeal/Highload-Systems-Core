@@ -34,9 +34,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(
-        securedEnabled = true,
-        jsr250Enabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig {
 
     @Value("${jwt.public.key}")
@@ -77,18 +75,20 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf((csrf) -> csrf.ignoringRequestMatchers("/login"))
+        return http.csrf((csrf) -> csrf.ignoringRequestMatchers("/login"))
                 .httpBasic(withDefaults())
-                .oauth2ResourceServer((oauth) -> oauth.jwt(withDefaults()))
-                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer((oauth) ->
+                        oauth.
+                                jwt(withDefaults()))
+                .sessionManagement((session) ->
+                        session
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling((exceptions) -> exceptions
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                )
+                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
                 .authorizeHttpRequests((request) ->
                         request
-                                .requestMatchers( "/login").permitAll()
+                                .requestMatchers("/login").permitAll()
                                 .anyRequest().authenticated())
                 .build();
     }

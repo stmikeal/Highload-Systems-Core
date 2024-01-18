@@ -2,7 +2,6 @@ package ru.stroy.entity.datasource;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.SequenceGenerator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

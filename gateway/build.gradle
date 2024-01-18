@@ -4,8 +4,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'com.gateway'
-version = '0.0.1-SNAPSHOT'
+group = 'ru.stroy'
+version = '1.0.0'
 
 java {
     sourceCompatibility = '17'
@@ -21,22 +21,28 @@ ext {
 }
 
 dependencies {
-    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
-    
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
+    // Eureka
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+    // Gateway
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
-
-
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 }
 
 dependencyManagement {

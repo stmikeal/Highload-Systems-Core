@@ -15,17 +15,17 @@ import java.nio.file.AccessDeniedException;
 public class RestResponseEntityExceptionHandler
         extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = { IllegalArgumentException.class })
+    @ExceptionHandler(value = {IllegalArgumentException.class})
     protected ResponseEntity<?> handleBadRequest(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(value = { AccessDeniedException.class })
+    @ExceptionHandler(value = {AccessDeniedException.class})
     protected ResponseEntity<?> handleForbidden(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.FORBIDDEN, request);
     }
 
-    @ExceptionHandler(value = { RuntimeException.class, KeyAlreadyExistsException.class })
+    @ExceptionHandler(value = {RuntimeException.class, KeyAlreadyExistsException.class})
     protected ResponseEntity<?> handleConflict(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }

@@ -9,6 +9,7 @@ import ru.stroy.entity.datasource.Login;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 public class LoginDetails implements UserDetails {
@@ -16,8 +17,7 @@ public class LoginDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(
-                PermissionAccountEnum.getByCode(login.getAccount().getPermission()).getName()));
+        return List.of(new SimpleGrantedAuthority(Objects.requireNonNull(PermissionAccountEnum.getByCode(login.getAccount().getPermission())).getName()));
     }
 
     @Override

@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PutMapping;
 public interface AccountClientFeignClient {
 
     @PutMapping(path = "/empty", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    Long createEmptyAccount ();
+    Long createEmptyAccount();
 }

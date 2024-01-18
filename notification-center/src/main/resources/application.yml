@@ -4,6 +4,7 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_URL}
+kafka.server: ${KAFKA_URL}
 spring:
   mail:
     host: smtp.gmail.com

@@ -5,11 +5,10 @@ import org.springframework.stereotype.Service;
 import ru.stroy.dto.request.AdvertCreateDto;
 import ru.stroy.entity.datasource.Account;
 import ru.stroy.entity.datasource.Advert;
+import ru.stroy.exceptions.AccessDeniedException;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.repositories.AdvertTypeRepository;
 import ru.stroy.repositories.CurrencyTypeRepository;
-
-import java.nio.file.AccessDeniedException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ public class AdvertService {
     private final AdvertRepository advertRepository;
     private final AccountService accountService;
 
-    public Advert createAdvertByDto(AdvertCreateDto advertCreateDto) {
+    public void createAdvertByDto(AdvertCreateDto advertCreateDto) {
         Advert advert = new Advert();
         if (advertCreateDto.getCompanyId() != null)
             advert.setCompany(companyService.getCompanyWithPermission(advertCreateDto.getCompanyId()));
@@ -30,14 +29,14 @@ public class AdvertService {
         advert.setPrice(advertCreateDto.getPrice());
         advert.setTitle(advertCreateDto.getTitle());
         advert.setType(advertTypeRepository.findByCode(advertCreateDto.getAdvertType().getCode()));
-        return advertRepository.save(advert);
+        advertRepository.save(advert);
     }
 
-    public void deleteAdvert(Long advertId) throws Exception {
+    public void deleteAdvert(Long advertId) {
         Advert advert = advertRepository
                 .findById(advertId).orElseThrow(() -> new IllegalArgumentException("Not found advert"));
         Account account = accountService.getContextAccount();
-        if(!advert.getAuthor().getId().equals(account.getId())) {
+        if (!advert.getAuthor().getId().equals(account.getId())) {
             throw new AccessDeniedException("The user is not owner of advert");
         }
         advertRepository.delete(advert);

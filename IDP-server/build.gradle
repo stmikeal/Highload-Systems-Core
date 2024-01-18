@@ -21,28 +21,38 @@ ext {
 }
 
 dependencies {
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
-    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
-    implementation project(':shared-module')
+    // Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-    implementation 'io.projectreactor:reactor-core:3.6.1'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-authorization-server'
+    // Feign Connection
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+
+    // Shared models
+    implementation project(':shared-module')
+
+    // Security
+    implementation 'org.springframework.security:spring-security-oauth2-authorization-server'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '6.1.2'
+    implementation 'org.springframework.security:spring-security-core:6.1.2'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    // Data
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.postgresql:postgresql:42.6.0'
+
+    //Eureka
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.springframework.security:spring-security-test'

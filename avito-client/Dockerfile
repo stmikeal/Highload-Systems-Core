@@ -1,4 +1,4 @@
-FROM gradle:8.3.0-jdk17 AS build
+FROM gradle:8.4.0-jdk17 AS build
 RUN mkdir -p /root/java/application
 COPY --chown=gradle:gradle ../.. /root/java/application/src
 WORKDIR /root/java/application/src

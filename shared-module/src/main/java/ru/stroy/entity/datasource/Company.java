@@ -1,7 +1,6 @@
 package ru.stroy.entity.datasource;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +26,9 @@ public class Company extends TimeManagedEntity {
     private List<AccountCompanyLink> employee;
 
     @ManyToMany
-    @JoinTable(name="company_area_link",
-            joinColumns=@JoinColumn(name="company"),
-            inverseJoinColumns=@JoinColumn(name="area"))
+    @JoinTable(name = "company_area_link",
+            joinColumns = @JoinColumn(name = "company"),
+            inverseJoinColumns = @JoinColumn(name = "area"))
     @JsonIgnore
     private List<Area> areas;
 }

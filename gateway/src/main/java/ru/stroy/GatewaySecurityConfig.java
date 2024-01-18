@@ -1,4 +1,4 @@
-package com.gateway;
+package ru.stroy;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;

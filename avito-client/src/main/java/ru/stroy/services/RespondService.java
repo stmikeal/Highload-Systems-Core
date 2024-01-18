@@ -1,14 +1,11 @@
 package ru.stroy.services;
 
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import ru.stroy.dto.request.AdvertRespondCreateDto;
 import ru.stroy.entity.datasource.Advert;
 import ru.stroy.entity.datasource.AdvertRespond;
 import ru.stroy.entity.datasource.Document;
-
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.repositories.AdvertRespondRepository;
 
@@ -22,7 +19,7 @@ public class RespondService {
     private final AdvertRepository advertRepository;
     private final DocumentService documentService;
 
-    public AdvertRespond createAdvertRespondByDto(AdvertRespondCreateDto advertRespondCreateDto) {
+    public void createAdvertRespondByDto(AdvertRespondCreateDto advertRespondCreateDto) {
 
         Advert advert = advertRepository
                 .findById(advertRespondCreateDto.getAdvertId())
@@ -36,19 +33,19 @@ public class RespondService {
         advertRespond.setAdvert(advert);
         advertRespond.setTitle(advertRespondCreateDto.getTitle());
         advertRespond.setText(advertRespondCreateDto.getDescription());
-        return advertRespondRepository.save(advertRespond);
+        advertRespondRepository.save(advertRespond);
     }
 
-    public AdvertRespond setAdvertRespondByDto(AdvertRespondCreateDto advertRespondCreateDto, Long advertId) {
+    public void setAdvertRespondByDto(AdvertRespondCreateDto advertRespondCreateDto, Long advertId) {
         AdvertRespond advertRespond = getRespondByAdvert(advertId);
         advertRespond.setTitle(advertRespondCreateDto.getTitle());
-        if(advertRespondCreateDto.getDescription() != null) {
+        if (advertRespondCreateDto.getDescription() != null) {
             advertRespond.setText(advertRespondCreateDto.getDescription());
         }
-        return advertRespondRepository.save(advertRespond);
+        advertRespondRepository.save(advertRespond);
     }
 
-    public void deleteAdvertRespondByDto(Long advertId){
+    public void deleteAdvertRespondByDto(Long advertId) {
         AdvertRespond advertRespond = getRespondByAdvert(advertId);
         advertRespondRepository.delete(advertRespond);
     }

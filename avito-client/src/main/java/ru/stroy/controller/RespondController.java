@@ -33,13 +33,13 @@ public class RespondController {
     @PostMapping("/{id}")
     @ResponseBody
     public void setAdvertRespond(@Valid @RequestBody AdvertRespondCreateDto advertRespondCreateDto,
-                                 @PositiveOrZero @PathVariable Long id){
+                                 @PositiveOrZero @PathVariable Long id) {
         respondService.setAdvertRespondByDto(advertRespondCreateDto, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    public void deleteAdvertRespond(@PositiveOrZero @PathVariable Long id){
+    public void deleteAdvertRespond(@PositiveOrZero @PathVariable Long id) {
         respondService.deleteAdvertRespondByDto(id);
     }
 
@@ -58,7 +58,7 @@ public class RespondController {
     @PostMapping("/{advertId}/document/{documentId}")
     @ResponseBody
     public void attachDocumentRespond(@PositiveOrZero @PathVariable Long advertId,
-                                      @PositiveOrZero @PathVariable Long documentId){
+                                      @PositiveOrZero @PathVariable Long documentId) {
         respondService.attachDocumentRespond(advertId, documentId);
     }
 

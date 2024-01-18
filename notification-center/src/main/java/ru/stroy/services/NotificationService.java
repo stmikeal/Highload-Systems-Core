@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import ru.stroy.exceptions.JSONParseKeyException;
 import ru.stroy.repositories.NotificationRepository;
+import ru.stroy.entity.datasource.Message;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,8 @@ public class NotificationService {
         String address = json.get("address").toString();
         String subject = json.get("subject").toString();
         for (var key : json.keySet()) {
-            pattern = pattern.replaceAll("\\{" + key.toString() + "}", json.get(key).toString());
+            if (json.get(key) != null)
+                pattern = pattern.replaceAll("\\{" + key.toString() + "}", json.get(key).toString());
         }
         javaMailSender.send(createMail(address, subject, pattern));
     }

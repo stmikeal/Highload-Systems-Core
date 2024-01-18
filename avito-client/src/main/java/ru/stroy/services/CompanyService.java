@@ -1,8 +1,7 @@
 package ru.stroy.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.PermissionDeniedDataAccessException;
-import org.springframework.security.access.AccessDeniedException;
+import ru.stroy.exceptions.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.stroy.dto.enumeration.AccessCompanyEnum;
@@ -29,14 +28,13 @@ public class CompanyService {
     private final TariffService tariffService;
 
     @Transactional
-    public Company createCompanyByCurrentUser(CompanyCreateDto companyCreateDto) {
+    public void createCompanyByCurrentUser(CompanyCreateDto companyCreateDto) {
         Company company = new Company();
         company.setName(companyCreateDto.getName());
         company.setAvatarUrl(companyCreateDto.getAvatarUrl());
         company = companyRepository.save(company);
         accountCompanyLinkService
                 .createLink(accountService.getContextAccount(), AccessCompanyEnum.Owner, company, "Владелец");
-        return company;
     }
 
     @Transactional

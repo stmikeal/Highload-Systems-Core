@@ -21,22 +21,34 @@ ext {
 }
 
 dependencies {
+	// Kafka
 	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
+	// Shared models
 	implementation project(':shared-module')
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// Data
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
+	implementation 'org.postgresql:postgresql:42.6.0'
+
+	// Mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// Eureka
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+	// Config
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
 

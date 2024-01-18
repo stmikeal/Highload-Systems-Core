@@ -16,12 +16,6 @@ import ru.stroy.entity.basic.IdEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Author: Vyacheslav Chernyshov
- * Date: 12.02.19
- * Time: 21:39
- * e-mail: 2262288@gmail.com
- */
 @Configuration
 public class KafkaConsumerConfig {
 
@@ -34,7 +28,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> batchFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, IdEntity> factory =
+        ConcurrentKafkaListenerContainerFactory<Long, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(true);
@@ -43,7 +37,7 @@ public class KafkaConsumerConfig {
 
     @Bean
     public KafkaListenerContainerFactory<?> singleFactory() {
-        ConcurrentKafkaListenerContainerFactory<Long, IdEntity> factory =
+        ConcurrentKafkaListenerContainerFactory<Long, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setBatchListener(false);
@@ -51,7 +45,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<Long, IdEntity> consumerFactory() {
+    public ConsumerFactory<Long, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 

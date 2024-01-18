@@ -12,7 +12,6 @@ import java.util.Objects;
 public class AuthInterceptor implements RequestInterceptor {
 
 
-
     @Override
     public void apply(RequestTemplate template) {
         template.header("Authorization",

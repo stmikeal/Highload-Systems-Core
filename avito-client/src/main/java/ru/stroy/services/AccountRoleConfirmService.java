@@ -16,6 +16,6 @@ public class AccountRoleConfirmService {
         roleConfirmation.setConfirmDocument(document);
         roleConfirmation.setSignature(signature);
         roleConfirmation.setDescription(description);
-        return  accountRoleConfirmRepository.save(roleConfirmation);
+        return accountRoleConfirmRepository.save(roleConfirmation);
     }
 }

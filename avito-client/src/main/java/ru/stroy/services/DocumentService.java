@@ -1,7 +1,7 @@
 package ru.stroy.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
+import ru.stroy.exceptions.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import ru.stroy.dto.request.DocumentPutDto;
 import ru.stroy.entity.datasource.Account;
@@ -25,14 +25,13 @@ public class DocumentService {
         return accountRepository.getById(id);
     }
 
-    public Document putDocumentByDto(DocumentPutDto documentPutDto) {
+    public void putDocumentByDto(DocumentPutDto documentPutDto) {
         Document document = new Document();
         document.setUrl(documentPutDto.getUrl());
         document.setDescription(documentPutDto.getDescription());
         document.setTitle(documentPutDto.getTitle());
         document.setAuthor(getContextAccount());
         documentRepository.save(document);
-        return document;
     }
 
     public List<Document> getDocumentsOfCurrentUser() {

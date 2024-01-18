@@ -6,8 +6,6 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -16,9 +14,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.stroy.dto.request.AdvertCreateDto;
-import ru.stroy.entity.datasource.Advert;
 import ru.stroy.entity.datasource.Message;
-import ru.stroy.feign.NotificationFeignClient;
+import ru.stroy.entity.datasource.Advert;
 import ru.stroy.repositories.AdvertRepository;
 import ru.stroy.services.AdvertService;
 
@@ -26,11 +23,10 @@ import ru.stroy.services.AdvertService;
 @RestController
 @RequestMapping("/advert")
 @Validated
-@SecurityRequirement(name = "javainuseapi")
+@SecurityRequirement(name = "avito")
 public class AdvertController {
     private final AdvertService advertService;
     private final AdvertRepository advertRepository;
-    private final NotificationFeignClient notificationFeignClient;
     private final KafkaTemplate<Long, Message> kafkaTemplate;
 
     @PutMapping
@@ -55,19 +51,18 @@ public class AdvertController {
     public Advert getAdvert(@PositiveOrZero @PathVariable Long id) {
         Advert advert = advertRepository
                 .findById(id).orElseThrow(() -> new IllegalArgumentException("Advert not found"));
-        JSONObject json = new JSONObject();
-        json.put("address", advert.getAuthor().getEmail());
-        json.put("pattern", "Seen");
-        json.put("subject", "Объявление просмотрено");
-        json.put("name", advert.getAuthor().getName());
-        json.put("title", advert.getTitle());
-        kafkaTemplate.send("server.notification", new Message(json.toJSONString()));
+        Message message = new Message(advert.getAuthor().getEmail(),
+                "Seen",
+                "Объявление просмотрено",
+                advert.getAuthor().getName(),
+                advert.getTitle());
+        kafkaTemplate.send("server.notification", message);
         return advert;
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    public void deleteAdvert(@PositiveOrZero @PathVariable Long id) throws Exception {
+    public void deleteAdvert(@PositiveOrZero @PathVariable Long id) {
         advertService.deleteAdvert(id);
     }
 }

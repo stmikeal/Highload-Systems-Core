@@ -3,7 +3,6 @@ package ru.stroy.controllers;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.stroy.entity.datasource.FileAttachment;
+import ru.stroy.exceptions.FileUploadException;
 import ru.stroy.repositories.FileRepository;
 import ru.stroy.services.FileService;
 
@@ -28,7 +28,7 @@ public class FileController {
 
     @PostMapping(path = "/upload")
     public @ResponseBody Long fileUpload(@RequestParam("file") MultipartFile file)
-                                         throws FileUploadException, IOException {
+            throws FileUploadException, IOException {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         String name = file.getOriginalFilename();
         if (file.isEmpty()) throw new FileUploadException("Файл не должен быть пустой");
@@ -48,7 +48,7 @@ public class FileController {
     }
 
     @GetMapping(path = "/download/{id}")
-    public ResponseEntity<InputStreamResource> getFile(@PathVariable("id") Long id){
+    public ResponseEntity<InputStreamResource> getFile(@PathVariable("id") Long id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         byte[] bytes = fileService.loadFile(id, username);
         String filename = fileService.getFilename(id, username);

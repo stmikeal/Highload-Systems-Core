@@ -1,7 +1,6 @@
 package ru.stroy;
 
 
-
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.stereotype.Component;
@@ -12,8 +11,6 @@ import java.util.Objects;
 
 @Component
 public class AuthInterceptor implements RequestInterceptor {
-
-
 
     @Override
     public void apply(RequestTemplate template) {

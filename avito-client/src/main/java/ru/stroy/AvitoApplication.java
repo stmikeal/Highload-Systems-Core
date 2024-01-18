@@ -21,7 +21,7 @@ import java.util.List;
 @EnableJpaRepositories
 @EnableDiscoveryClient
 @EnableFeignClients
-@SecurityScheme(name = "javainuseapi", scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
+@SecurityScheme(name = "avito", scheme = "bearer", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
 public class AvitoApplication {
 
     public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class AvitoApplication {
                         .contact(new Contact().name("Mike and Leo")
                                 .email("timetocook420@gmail.com")))
                 .servers(List.of(new Server().url("http://localhost:8081")
-                                .description("Avito service")));
+                        .description("Avito service")));
     }
 
 }

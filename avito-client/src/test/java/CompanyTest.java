@@ -13,7 +13,7 @@ import ru.stroy.services.AccountService;
 import ru.stroy.services.CompanyService;
 import ru.stroy.services.TariffService;
 
-import org.springframework.security.access.AccessDeniedException;
+import ru.stroy.exceptions.AccessDeniedException;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;

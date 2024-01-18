@@ -15,14 +15,16 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:latest
+    restart: always
     depends_on:
       - zookeeper
     ports:
       - 29092:29092
+      - 9092:9092
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://kafka:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -47,6 +49,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - CONFIG_URL=http://config-server:8888
       - EUREKA_URL=http://eureka-server:8761/eureka
+      - KAFKA_URL=http://kafka:29092
 
   account-server:
     build:
@@ -95,8 +98,6 @@ services:
     container_name: eureka-server
     ports:
       - "8761:8761"
-    depends_on:
-      - database
     environment:
       - TZ=Europe/Moscow
       - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
@@ -114,9 +115,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - database
       - eureka-server
-      - config-server
       - account-server
       - avito-client
       - idp-server
@@ -136,6 +135,49 @@ services:
     container_name: idp-server
     ports:
       - "9000:9000"
+    depends_on:
+      - database
+      - eureka-server
+      - config-server
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+  notification-center:
+    build:
+      context: .
+      dockerfile: notification-center/Dockerfile
+    restart: always
+    container_name: notification-center
+    ports:
+      - "9090:9090"
+      - "587:587"
+    depends_on:
+      - database
+      - eureka-server
+      - config-server
+      - kafka
+    environment:
+      - TZ=Europe/Moscow
+      - POSTGRES_URL=jdbc:postgresql://database:5432/postgres
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFIG_URL=http://config-server:8888
+      - EUREKA_URL=http://eureka-server:8761/eureka
+      - KAFKA_URL=http://kafka:29092
+
+  file-server:
+    build:
+      context: .
+      dockerfile: file-server/Dockerfile
+    restart: always
+    container_name: file-server
+    ports:
+      - "9091:9091"
     depends_on:
       - database
       - eureka-server

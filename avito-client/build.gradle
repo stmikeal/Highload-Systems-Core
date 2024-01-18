@@ -21,32 +21,47 @@ ext {
 }
 
 dependencies {
+    //Kafka
     implementation 'org.springframework.kafka:spring-kafka'
-
-
-    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.0.3'
-
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.3'
+
+    // Shared models
     implementation project(':shared-module')
+
+    // Feign connection
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    //Config Server
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
-
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+    // Data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.postgresql:postgresql:42.6.0'
+
+    // Eureka
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '6.1.2'
+    implementation 'org.springframework.security:spring-security-core:6.1.2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -54,9 +69,6 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:1.17.6"
     testImplementation "org.testcontainers:junit-jupiter:1.17.6"
     testImplementation 'io.rest-assured:rest-assured'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
-    implementation 'org.flywaydb:flyway-core'
 
 }
 

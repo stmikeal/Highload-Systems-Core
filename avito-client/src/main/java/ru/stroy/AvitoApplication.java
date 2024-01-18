@@ -33,6 +33,7 @@ public class AvitoApplication {
         return new AuthInterceptor();
     }
 
+
     @Bean
     public OpenAPI customOpenApi() {
         return new OpenAPI().info(new Info().title("Application API")

@@ -49,7 +49,7 @@ public class RespondController {
         respondService.deleteAdvertRespondByDto(id);
     }
 
-    @Operation(summary = "Get list of respond")
+    @Operation(summary = "Get list of responds")
     @GetMapping
     public ResponseEntity<Page<AdvertRespond>> getAllAdvert(
             @RequestParam(value = "offset", defaultValue = "0") @Min(0) Integer offset,

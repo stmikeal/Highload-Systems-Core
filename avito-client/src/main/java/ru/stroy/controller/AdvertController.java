@@ -67,7 +67,7 @@ public class AdvertController {
                 .findById(id).orElseThrow(() -> new IllegalArgumentException("Advert not found"));
         Message message = new Message(advert.getAuthor().getEmail(),
                 "Seen",
-                "Объявление просмотрено",
+                "Новость просмотрена",
                 advert.getAuthor().getName(),
                 advert.getTitle());
         kafkaTemplate.send("server.notification", message);
